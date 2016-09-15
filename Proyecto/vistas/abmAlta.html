@@ -1,0 +1,89 @@
+	<div class="container">
+		<div class="page-header">
+			<center> <h1> Formulario de alta</h1>   </center>     
+		</div>
+			<form name="formAlta" class="tablas" enctype="multipart/form-data" >
+			  	<div class="row">
+				<span> Apellido </span>
+				<input type="text" name="apellido" ng-model="persona.apellido" placeholder="ingrese apellido" required />
+				</div>
+
+				<div class="row">
+				<span> Nombre </span>
+				<input type="text" name="nombre" ng-model="persona.nombre" placeholder="ingrese nombre" value="" required/>
+				</div>
+
+				<div class="row">
+				<span> DNI </span>
+				<input type="number" name="dni" ng-model="persona.dni" placeholder="ingrese dni" required     />
+				</div>
+
+				<div class="row">
+				<span> Edad </span>
+				<input type="number"  ng-model="persona.edad" placeholder="ingrese edad" required" />
+				</div>
+
+				<div class="row">
+				<span> Fecha de nacimiento </span>
+				<input type="date" ng-model="persona.fechanac" required> 
+				</div>
+
+				<div class="row">
+				<span> Email </span>
+				<input type="mail"  ng-model="persona.correo" placeholder="ingrese correo" value="" required/>
+				</div>
+
+				<div class="row">
+				<span>Sexo</span>
+				<ul>
+				<li>
+				Hombre
+			  	<input type="radio" ng-model="gender" value="hombre">
+			  	</li>
+			  	<li>
+			  	Mujer
+				<input type="radio" ng-model="gender" value="mujer">
+				</li>
+				<li>
+				Otro
+				<input type="radio" ng-model="gender" value="otro">
+				</li>
+				</ul>
+				</div>
+				
+				<div class="row">
+				<span> Estado Civil </span> 
+				<select ng-model="estadocivil" required>
+				<option selected>Soltero
+				<option>Casado
+				<option>Divorciado
+				<option>Viudo
+				</select>
+				</div>
+
+				<div class="row">
+				<span> Lenguajes de programacion </span>
+				<input type="checkbox" value="angular">
+					Angular <br>
+				<input type="checkbox" value="JS">
+					Javascript <br>
+				<input type="checkbox" value="csharp">
+					C# <br>
+				<input type="checkbox" value="PHP">
+					PHP <br>
+				<input type="checkbox" value="C++">
+					C++
+				</div>
+				
+				<div class="row">	
+				<span> Password </span>
+  				<input type="password"  ng-model="persona.pw" placeholder="ingrese clave" />
+  				<input type="password"  ng-model="persona.pwconfirm" placeholder="reingrese clave" />
+  				</div>
+				
+				<a class="btn btn-warning" name="guardar" ng-disabled="formAlta.$invalid" ng-click="Guardar()" ><span class="glyphicon glyphicon-save">&nbsp;</span>Guardar</a>
+					
+				</div>
+
+			</form>
+	</div>
