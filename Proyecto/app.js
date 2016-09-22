@@ -1,6 +1,12 @@
-var proyecto = angular.module('proyecto',['ui.router']);
+var proyecto = angular.module('proyecto',['ui.router','satellizer']);
 
-proyecto.config(function ($stateProvider, $urlRouterProvider){
+proyecto.config(function ($stateProvider, $urlRouterProvider,$authProvider){
+
+ 
+$authProvider.loginUrl = 'Proyecto/servidor/php/auth.php'
+$authProvider.tokenName = "mitoken"
+$authProvider.tokenPrefix = "proyecto"
+$authProvider.authHeader = "data"
 
   $stateProvider
 
@@ -8,6 +14,7 @@ proyecto.config(function ($stateProvider, $urlRouterProvider){
       .state('inicio', {
                 url : '/inicio',
                 templateUrl : 'vistas/main.html',
+                controller: 'loginCtrl'
 
             })
 
@@ -72,6 +79,32 @@ proyecto.config(function ($stateProvider, $urlRouterProvider){
 
 .controller('abmAltaCtrl',function($scope,$http){
 
-});
+})
 
+.controller('loginCtrl',function($scope,$http,$auth){
+
+    $scope.dato = {};
+
+    $scope.login = function (){
+
+        $auth.login(
+
+            { usuario: $scope.dato.usuario,
+              clave: $scope.dato.clave}
+        )
+
+        .then(
+            function(rta){
+                console.log("RTA", rta);
+            if( $auth.isAuthenticated() )
+                console.info("info login:",$auth.getPayload());
+            },
+            function(error){
+                console.log("ERROR",error);
+            }
+        )
+
+    }
+
+})
 
