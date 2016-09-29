@@ -74,7 +74,9 @@ body{
 ul
 {
     list-style-type: none;
+    text-align: left;
 }
+
 
 .login .pane {
     position: fixed;
@@ -92,5 +94,15 @@ ul
     -moz-box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
     -webkit-box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
     -box-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.regalos img{
+
+	height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;
+    border-color: black;
+    margin: 0px;
 }
 

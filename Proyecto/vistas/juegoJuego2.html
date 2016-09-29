@@ -1,1 +1,16 @@
 <h1> Juego 2</h1>
+
+
+<div class="mainNav">
+	Buen dia lince de la pradera mesopotamica, te invito a que adivines a donde esta el regalo misterioso(elegi sabiamente). <br><br>
+	<button  ng-if="gameover" ng-click="iniciarJuego()"> Reintentar</button>
+<div class="regalos">
+	<img ng-disabled="gameover" ng-click="gameover || abrirRegalo('1')" ng-src="{{uno}}" alt="">
+	<img ng-click="gameover || abrirRegalo('2')" ng-src="{{dos}}" alt="">
+	<img ng-click="gameover || abrirRegalo('3')" ng-src="{{tres}}" alt="">
+	<img ng-click="gameover || abrirRegalo('4')" ng-src="{{cuatro}}" alt="">
+	<img ng-click="gameover || abrirRegalo('5')" ng-src="{{cinco}}" alt="">
+	<img ng-click="gameover || abrirRegalo('6')" ng-src="{{seis}}" alt="">
+</div>
+
+</div>

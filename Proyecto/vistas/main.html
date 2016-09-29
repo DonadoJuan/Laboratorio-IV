@@ -1,10 +1,12 @@
 <div class="mainNav">
 	
-	<button ui-sref="juego.juego1()" type="button" class="btn btn-info btn-lg"> Juego loco</button>
+	<button ng-if="!isAuthenticated()" ui-sref="juego.juego1()" type="button" class="btn btn-info btn-lg"> Juego loco</button>
 
 	<button ui-sref="abm.alta()" type="button" class="btn btn-warning btn-lg"> ABM personas</button>
 
 	<button ng-click="inicio.login = true" type="button" class="btn btn-success btn-lg"> Login</button>
+
+	<button ng-click="logout()" type="button" class="btn btn-info btn-lg"> Log out</button
 </div>
 
 <div class="mainNav">
@@ -15,14 +17,14 @@
 		<footer></footer>
 		<div class="pane">
 			<form>
-				<div class="form-group">
+<!-- 				<div class="form-group">
 					<label class=" required-field">Email:</label> 
 					<input type="text" name="username" required id="id_username" class="form-control" ng-model="dato.usuario" maxlength="150">
 				</div>
 				<div class="form-group">
 					<label class=" required-field">Password:</label> 
 					<input type="password" name="password" required class="form-control" id="id_password" ng-model="dato.clave">
-				</div>
+				</div> -->
 				<div class="form-group">
 				<button ng-click="login()" class="btn btn-default btn-primary btn-block" value="Login">Login</button><br>
 				</div>

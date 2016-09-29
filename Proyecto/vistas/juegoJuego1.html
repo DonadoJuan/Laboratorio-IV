@@ -1,1 +1,29 @@
 <h1> Juego 1</h1>
+
+<div class="mainNav">
+
+<h3> Adivina el numero de la suerte amigo!</h3>
+<h3> Estos son los premios ;)</h3>
+<ul>
+	<li>5 o mas intentos: Patada en la nuca</li>
+	<li>4 intentos: Pastafrola recien sacada del horno por tu abuela</li>
+	<li>2 intentos: Tortuga ninja edicion limitada</li>
+	<li>1 intento: Autografo 100% real no fake de el comandante</li>
+</ul>
+
+<button ng-if="gameover" ng-click="iniciarJuego()" class="btn btn-default btn-primary" > Empezar juego</button><br><br>
+
+El numero secreto es: <input type="text" ng-model="numIngresado"><br><br>
+
+<button ng-if="!gameover" ng-click="check()" class="btn btn-default btn-primary" > Adivinar</button><br><br>
+Total de intentos: {{intentos}} <br><br><br>
+
+<h3> PREMIO</h3>
+
+<iframe ng-if="gameover && intentos == 5"  width="560" height="315" src="https://www.youtube.com/embed/_13mOMGrLqY?start=17" frameborder="0" allowfullscreen></iframe>
+<img ng-if="gameover && intentos == 4" src="http://www.cocinerosargentinos.com/images/1_Pastafrola-rustica-de-campo.jpg" alt="">
+<img ng-if="gameover && intentos == 2" src="http://mlm-d2-p.mlstatic.com/figura-tortugas-ninja-leonardo-edicion-limitada-nuevesita-198801-MLM20442978432_102015-O.jpg?square=false" alt="">
+<img ng-if="gameover && intentos == 1" src="http://www.losandes.com.ar/files/image/2010/3/6/299652.jpg" alt="">
+
+
+</div>
