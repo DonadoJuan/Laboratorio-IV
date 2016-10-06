@@ -43,6 +43,7 @@ $authProvider.authHeader = "data"
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/abmGrilla.html',
+                        controller: 'abmGrillaCtrl'
                     }
                 }
             })
@@ -81,6 +82,60 @@ $authProvider.authHeader = "data"
 })
 
 .controller('abmAltaCtrl',function($scope,$http){
+
+})
+
+.controller('abmGrillaCtrl',function($scope,$http){
+
+    $scope.listado = {};
+
+    $http.get("http://localhost:8080/proyecto/ws1/personas")
+    .then(function (respuesta){
+
+        $scope.listado = respuesta.data;
+        console.info("Listado: ", $scope.listado);
+
+
+    },function(error){
+
+        console.info("Error: ", error);
+
+    });
+
+    $scope.borrar = function(id){
+
+        $http.delete("http://localhost:8080/proyecto/ws1/persona/"+ id)
+            .then(function (respuesta){
+
+                console.info("Filas restantes: ", respuesta.data);
+
+
+            },function(error){
+
+                console.info("Error: ", error);
+
+        });
+    }
+
+    $scope.modificar = function(persona){
+
+        persona.nombre = "MODIFICADO POR PUT";
+
+        $setTimeout(function() {}, );
+
+        $http.put("http://localhost:8080/proyecto/ws1/persona/"+JSON.stringify(persona))
+            .then(function (respuesta){
+
+                console.info("Modificado: ", respuesta.data);
+
+
+            },function(error){
+
+                console.info("Error: ", error);
+
+        });
+
+    }            
 
 })
 

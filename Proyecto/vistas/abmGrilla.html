@@ -3,8 +3,20 @@
 			<center> <h1> Listado de personas</h1>   </center>     
 		</div>
 
-		<div class="tablas">
-			<div class="row">
-				Roberto Carlos
-			</div>
-		</div>
+		<table class="table table-hover table-responsive">
+			<tr>
+			    <th>Nombre</th>
+			    <th>Apellido</th> 
+			    <th>Edad</th>
+			</tr>
+			<tr ng-repeat="persona in listado track by $index">
+
+				<td> {{persona.nombre}} </td>
+				<td> {{persona.apellido}} </td>
+				<td> {{persona.dni}} </td>
+				<td> <button ng-click="borrar(persona.id)"> Borrar </button> </td>
+				<td> <button ng-click="modificar(persona)"> Modificar </button> </td>
+
+			</tr>			 
+			    
+		<table>
