@@ -1,10 +1,10 @@
-var proyecto = angular.module('proyecto',['ui.router','satellizer']);
+var proyecto = angular.module('proyecto',['ui.router','satellizer','angularFileUpload']);
 
 proyecto.config(function ($stateProvider, $urlRouterProvider,$authProvider){
 
  
 $authProvider.loginUrl = 'Proyecto/servidor/php/auth.php'
-$authProvider.tokenName = "mitoken"
+$authProvider.tokenName = "miToken"
 $authProvider.tokenPrefix = "proyecto"
 $authProvider.authHeader = "data"
 
@@ -81,15 +81,42 @@ $authProvider.authHeader = "data"
    $urlRouterProvider.otherwise('/inicio');
 })
 
-.controller('abmAltaCtrl',function($scope,$http){
+.controller('abmAltaCtrl',function($scope,$http,FileUploader){
+
+     $scope.uploader = new FileUploader({url: 'http://localhost/proyecto/ws1/usuario/foto'});
+
+     
+
+    $scope.alta = {};
+
+    $scope.guardar = function(){
+
+        var objetoVoto = JSON.stringify($scope.alta);
+
+        $http.post("http://localhost/proyecto/ws1/usuario/" + objetoVoto)
+            .then(function (respuesta){
+
+            console.info("Exito", respuesta);
+
+
+        },function(error){
+
+            console.info("Error: ", error);
+
+        });
+
+
+    }
 
 })
 
 .controller('abmGrillaCtrl',function($scope,$http){
 
     $scope.listado = {};
+    $scope.modificar = {};
+    $scope.modo = false;
 
-    $http.get("http://localhost:8080/proyecto/ws1/personas")
+    $http.get("http://localhost/proyecto/ws1/votos")
     .then(function (respuesta){
 
         $scope.listado = respuesta.data;
@@ -102,9 +129,9 @@ $authProvider.authHeader = "data"
 
     });
 
-    $scope.borrar = function(id){
+    $scope.borrar = function(dni){
 
-        $http.delete("http://localhost:8080/proyecto/ws1/persona/"+ id)
+        $http.delete("http://localhost/proyecto/ws1/persona/"+ dni)
             .then(function (respuesta){
 
                 console.info("Filas restantes: ", respuesta.data);
@@ -117,16 +144,23 @@ $authProvider.authHeader = "data"
         });
     }
 
-    $scope.modificar = function(persona){
+    $scope.desplegarMod = function (voto){
 
-        persona.nombre = "MODIFICADO POR PUT";
+        $scope.modificar = voto;
+        $scope.modo = true;
+        $scope.modificar.fechanac = new Date(voto.fechanac);
+        $scope.modificar.dni = parseInt(voto.dni);
+    }
 
-        $setTimeout(function() {}, );
+    $scope.actualizar = function(){
 
-        $http.put("http://localhost:8080/proyecto/ws1/persona/"+JSON.stringify(persona))
+        $objetoVoto = JSON.stringify($scope.modificar);
+
+        $http.put("http://localhost/proyecto/ws1/votos/" + $objetoVoto)
             .then(function (respuesta){
 
                 console.info("Modificado: ", respuesta.data);
+                $scope.modo = false;
 
 
             },function(error){
@@ -247,9 +281,9 @@ $authProvider.authHeader = "data"
 
 })
 
-.controller('loginCtrl',function($scope,$http,$auth){
+.controller('loginCtrl',function($scope,$http,$auth,$state){
 
-    $scope.dato = {};
+    $scope.datos = {};
 
     $scope.login = function (){
 

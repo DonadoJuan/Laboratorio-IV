@@ -8,7 +8,6 @@
  */
 require 'vendor/autoload.php';
 require 'AccesoDatos.php';
-require 'personas.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -36,9 +35,10 @@ $app = new Slim\App();
 *
 *  GET: Para consultar y leer recursos */
 
-$app->get('/', function ($request, $response, $args) {
-    $response->write("Welcome to Slim!");
-    return $response;
+$app->post('/usuarios/foto', function ($request, $response, $args) {
+    
+    
+    
 });
 
 $app->get('/usuarios[/]', function ($request, $response, $args) {
@@ -53,36 +53,59 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
     return $response;
 });
 /* POST: Para crear recursos */
-$app->post('/usuario/{id}', function ($request, $response, $args) {
-    $response->write("Welcome to Slim!");
-    var_dump($args);
-    return $response;
+$app->post('/usuario/{voto}', function ($request, $response, $args) {
+
+    $voto = json_decode($args["voto"]);
+
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into votos (dni,sexo,fechanac,partido)values(:dni,:sexo,:fechanac,:partido)");
+    $consulta->bindValue(':dni',$voto->dni, PDO::PARAM_STR);
+    $consulta->bindValue(':sexo', $voto->sexo, PDO::PARAM_STR);
+    $consulta->bindValue(':fechanac', $voto->fechanac, PDO::PARAM_STR);
+    $consulta->bindValue(':partido', $voto->partido, PDO::PARAM_STR);
+    $consulta->execute();
+
+    return $objetoAccesoDato->RetornarUltimoIdInsertado();
+
 });
 
 // /* PUT: Para editar recursos */
-$app->put('/persona/{objeto}', function ($request, $response, $args) {
+$app->put('/votos/{objeto}', function ($request, $response, $args) {
     
-    $persona = json_decode($args["objeto"]);
-    $response->write(Persona::ModificarPersona($persona));
+    $voto = json_decode($args["objeto"]);
 
-    //$response->write( Persona::ModificarPersona())
-    return $response;
+            $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+            $consulta = $objetoAccesoDato->RetornarConsulta("UPDATE votos SET sexo = :sexo,
+                partido = :partido, fechanac = :fechanac WHERE dni = :dni");
+            $consulta->bindValue(':dni',$voto->dni, PDO::PARAM_STR);
+            $consulta->bindValue(':sexo',$voto->sexo, PDO::PARAM_STR);
+            $consulta->bindValue(':partido', $voto->partido, PDO::PARAM_STR);
+            $consulta->bindValue(':fechanac', $voto->fechanac, PDO::PARAM_STR);
+            return $consulta->execute();
 });
 
 // /* DELETE: Para eliminar recursos */
-$app->delete('/persona/{id}', function ($request, $response, $args) {
+$app->delete('/persona/{dni}', function ($request, $response, $args) {
 
+    $dni = $args["dni"];
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("DELETE  FROM votos WHERE dni = :dni ");
+    $consulta->bindValue(':dni',$dni, PDO::PARAM_STR);
+    $consulta->execute();
 
-    $response->write(Persona::BorrarPersona($args["id"]));
-
-    return $response;
+    return $consulta->rowCount();
+    
 });
 
-$app->get('/personas', function ($request, $response, $args) {
+$app->get('/votos', function ($request, $response, $args) {
 
-    $response->write(json_encode(Persona::TraerTodasLasPersonas()));
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM votos ");
+    $consulta->execute();
+    $arrVotos = json_encode($consulta->fetchAll());
+    return $arrVotos; 
 
-    return $response;
+    
 });
 /**
  * Step 4: Run the Slim application
