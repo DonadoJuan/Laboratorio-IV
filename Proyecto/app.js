@@ -83,13 +83,24 @@ $authProvider.authHeader = "data"
 
 .controller('abmAltaCtrl',function($scope,$http,FileUploader){
 
-     $scope.uploader = new FileUploader({url: 'http://localhost/proyecto/ws1/usuario/foto'});
-
-     
+    $scope.uploader = new FileUploader({url: 'upload.php'});
 
     $scope.alta = {};
 
+
+    $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+       console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+             console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    $scope.uploader.onCompleteAll = function() {
+             console.info('Se cargo con exito');
+    };
+
     $scope.guardar = function(){
+
+        $scope.uploader.uploadAll();
 
         var objetoVoto = JSON.stringify($scope.alta);
 

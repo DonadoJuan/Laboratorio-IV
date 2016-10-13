@@ -35,7 +35,20 @@ $app = new Slim\App();
 *
 *  GET: Para consultar y leer recursos */
 
-$app->post('/usuarios/foto', function ($request, $response, $args) {
+$app->post('/usuario/foto', function ($request, $response, $args) {
+
+    if ( !empty( $_FILES ) ) {
+    $tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
+    // Setear el path a la carpeta donde se cargaran los archivos
+    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
+    move_uploaded_file( $tempPath, $uploadPath );
+    $answer = array( 'answer' => 'Archivo Cargado!' );
+    $json = json_encode( $answer );
+    return $json;
+    } else {
+
+    return 'No se cargo el archivo';
+    }   
     
     
     
@@ -58,7 +71,7 @@ $app->post('/usuario/{voto}', function ($request, $response, $args) {
     $voto = json_decode($args["voto"]);
 
     $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-    $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into votos (dni,sexo,fechanac,partido)values(:dni,:sexo,:fechanac,:partido)");
+    $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into votos (dni,sexo,fechanac,partido) values(:dni,:sexo,:fechanac,:partido)");
     $consulta->bindValue(':dni',$voto->dni, PDO::PARAM_STR);
     $consulta->bindValue(':sexo', $voto->sexo, PDO::PARAM_STR);
     $consulta->bindValue(':fechanac', $voto->fechanac, PDO::PARAM_STR);
