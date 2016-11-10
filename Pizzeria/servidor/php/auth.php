@@ -30,7 +30,7 @@
 			$token["post"] = $post;
 			$token["respuesta"] = $respuesta->usuario;
 			$token["usuarioLogueado"] = $usuarioLogueado;
-			$token["exp"] = time()+20;
+			$token["exp"] = time()+5000;
 			//Llamo a la función JWT (JSON Web Token) que va a encriptar los datos.
 			$jwt = JWT::encode($token, $key);
 			//Almaceno en un array, un campo llamado igual que el $authProvider.tokenName de app.js, con el valor del JWT.

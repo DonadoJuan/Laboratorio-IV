@@ -2,12 +2,12 @@ var proyecto = angular.module('proyecto',['ui.router','satellizer','angularFileU
 
 proyecto.config(function ($stateProvider, $urlRouterProvider,$authProvider){
 
- /*
-$authProvider.loginUrl = 'Proyecto/servidor/php/auth.php'
+ 
+$authProvider.loginUrl = 'Pizzeria/servidor/php/auth.php'
 $authProvider.tokenName = "miToken"
 $authProvider.tokenPrefix = "proyecto"
 $authProvider.authHeader = "data"
-*/
+
 
   $stateProvider
 
@@ -82,19 +82,25 @@ $authProvider.authHeader = "data"
    $urlRouterProvider.otherwise('/inicio');
 })
 
-.controller('localesCtrl',function($scope){
+.controller('localesCtrl',function($scope,$auth){
 
-$scope.locales = [{id: 1,nombre: 'la nueva',años: 29},{id:2,nombre: 'kosovo',años: 42}];
+    console.info("Datos login",$auth.getPayload().usuarioLogueado);
+
+$scope.locales = [{id: 1,nombre: 'la nueva',años: 29},{id:2,nombre: 'kosovo',años: 42},{id:3,nombre: 'pepe',años: 42},{id:3,nombre: 'coco',años: 42}];
 
 })
 
-.controller('productosCtrl',function($scope,$stateParams){
+.controller('productosCtrl',function($scope,$stateParams,$auth){
+
+    console.info("Datos login",$auth.getPayload().usuarioLogueado);
 
     console.info("En vista productos: ",$stateParams.id);
 
 })
 
-.controller('operacionesCtrl',function($scope,$stateParams){
+.controller('operacionesCtrl',function($scope,$stateParams,$auth){
+
+    console.info("Datos login",$auth.getPayload().usuarioLogueado);
 
     console.info("En vista operaciones: ",$stateParams.id);
 
@@ -210,8 +216,7 @@ $scope.locales = [{id: 1,nombre: 'la nueva',años: 29},{id:2,nombre: 'kosovo',a�
 
     $scope.login = function (){
 
-        $state.go('locales');
-        /*
+        
         $auth.login({
             usuario: $scope.datos.usuario,
             clave: $scope.datos.clave
@@ -221,19 +226,20 @@ $scope.locales = [{id: 1,nombre: 'la nueva',años: 29},{id:2,nombre: 'kosovo',a�
                 //Si se logueó correctamente, isAuthenticated vale true. Entonces muestro por consola y redirijo al ABM.
                 console.log("Sesión iniciada!");
                 console.info("Info isAuthenticated: ", $auth.isAuthenticated());
-                console.info("Info getPayload: ", $auth.getPayload());
+                console.info("Info getPayload: ", $auth.getPayload().usuarioLogueado);
                 console.info("Info response: ", response);
-                $state.go('locales');
+                //$state.go('locales');
             }
             else{
                 console.info("Info isAuthenticated: ", $auth.isAuthenticated());
                 console.info("info no-login: ", $auth.getPayload());
+                console.info("Info response: ", response);
             }
         },
         function(err){
             console.log("Error de conexión", err);
         });
-        */
+        
     }
 
 })
