@@ -1,0 +1,52 @@
+		<div class="container">
+		<div class="page-header">
+			<center> <h1> Formulario de alta</h1>   </center>     
+		</div>
+			<form name="formAlta" class="tablas" enctype="multipart/form-data" >
+			  	<div class="row">
+
+				<div class="row">
+
+				<span> DNI </span>
+				<input type="number" name="dni" ng-model="alta.dni" placeholder="ingrese dni" required     />
+				</div>
+
+				<div class="row">
+				<span> Fecha de nacimiento </span>
+				<input type="date" ng-model="alta.fechanac" required> 
+				</div>
+
+				<div class="row">
+				<span>Sexo</span>
+				<ul>
+				<li>
+				Hombre
+			  	<input type="radio" ng-model="alta.sexo" value="hombre">
+			  	</li>
+			  	<li>
+			  	Mujer
+				<input type="radio" ng-model="alta.sexo" value="mujer">
+				</li>
+				<li>
+				Otro
+				<input type="radio" ng-model="alta.sexo" value="otro">
+				</li>
+				</ul>
+				</div>
+
+				<div class="row">
+				<span> Partido Politico </span>
+				<input type="text" ng-model="alta.partido" required> 
+				</div>
+				
+				<div class="row">
+				<span>Foto</span>
+				<input type="file" nv-file-select uploader="uploader"/>
+				</div>
+
+				<a class="btn btn-warning" name="guardar"  ng-click="guardar()" ><span class="glyphicon glyphicon-save">&nbsp;</span>Enviar voto!</a>
+					
+				</div>
+
+			</form>
+	</div>

@@ -1,0 +1,7 @@
+
+<div ui-view name="contenido">
+
+<ul class="nav nav-pills">
+  <li ng-repeat="local in locales" role="presentation"><a ui-sref="navbar({id:local.id})"> {{local.nombre}} </a></li>
+</ul>	
+</div>

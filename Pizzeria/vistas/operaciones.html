@@ -1,0 +1,78 @@
+	<div class="container">
+		<div class="page-header">
+			<center> <h1> Listado de personas</h1>   </center>     
+		</div>
+		<div ng-if="!modo">
+		<table class="table table-hover table-responsive">
+			<tr>
+			    <th>DNI</th>
+			    <th>SEXO</th> 
+			    <th>Fecha nacimiento</th>
+			    <th>Partido politico</th>
+			</tr>
+			<tr ng-repeat="voto in listado track by $index">
+
+				<td> {{voto.dni}} </td>
+				<td> {{voto.sexo}} </td>
+				<td> {{voto.fechanac}} </td>
+				<td> {{voto.partido}} </td>
+
+
+				<td> <button ng-click="borrar(voto.dni)"> Borrar </button> </td>
+				<td> <button ng-click="desplegarMod(voto)"> Modificar </button> </td>
+
+			</tr>			 
+			    
+		</table>
+		</div>
+
+			<div ng-if="modo">
+				<div class="page-header">
+			<center> <h1> Modificacion</h1>   </center>     
+				</div>
+
+
+				<form name="formAlta" class="tablas" enctype="multipart/form-data">
+			  	<div class="row">
+
+				<div class="row">
+
+				<span> DNI </span>
+				<input type="number" name="dni" ng-model="modificar.dni" placeholder="ingrese dni" required disabled />
+				</div>
+
+				<div class="row">
+				<span> Fecha de nacimiento </span>
+				<input type="date" ng-model="modificar.fechanac" required> 
+				</div>
+
+				<div class="row">
+				<span>Sexo</span>
+				<ul>
+				<li>
+				Hombre
+			  	<input type="radio" ng-model="modificar.sexo" value="hombre">
+			  	</li>
+			  	<li>
+			  	Mujer
+				<input type="radio" ng-model="modificar.sexo" value="mujer">
+				</li>
+				<li>
+				Otro
+				<input type="radio" ng-model="modificar.sexo" value="otro">
+				</li>
+				</ul>
+				</div>
+
+				<div class="row">
+				<span> Partido Politico </span>
+				<input type="text" ng-model="modificar.partido" required> 
+				</div>
+				
+				<a class="btn btn-warning" name="guardar" ng-disabled="formAlta.$invalid" 
+				ng-click="actualizar()" ><span class="glyphicon glyphicon-save">&nbsp;</span>Editar voto!</a>
+					
+				</div>
+			</div>
+
+			</form>
